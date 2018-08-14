@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <range-picker :year='2017'/>
+    <range-picker :year='2017'
+                  v-model='ranges'/>
   </div>
 </template>
 
@@ -9,6 +10,14 @@ import RangePicker from './components/RangePicker.vue'
 
 export default {
   name: 'App',
+  data () {
+    return {
+      ranges: [
+        [1500038015000, 1500642815000],
+        [1487682815000, 1490102015000]
+      ]
+    }
+  },
   components: {
     RangePicker
   }
