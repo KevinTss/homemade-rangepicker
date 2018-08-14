@@ -6,6 +6,8 @@
 .rangepicker {
   display: flex;
   flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .rangepicker_month {
@@ -36,5 +38,16 @@
 }
 
 .rangepicker_day {
-  
+  width: 14%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+}
+
+.rangepicker_out {
+  opacity: 0.35;
+}
+.rangepicker_range {
+  color: peru;
 }
