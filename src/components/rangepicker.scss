@@ -1,0 +1,40 @@
+.rangepicker * {
+  box-sizing: border-box;
+
+}
+
+.rangepicker {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.rangepicker_month {
+  width: 25%;
+  background-color: white;
+  border: 1px solid #000000;
+}
+
+.rangepicker_month_title {
+  height: 64px;
+  line-height: 64px;
+  text-align: center;
+  background-color: papayawhip;
+  text-transform: uppercase;
+  font-size: 1rem
+}
+
+.rangepicker_month_days {
+  height: 30px;
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: space-around;
+}
+
+.rangepicker_month_numbers {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.rangepicker_day {
+  
+}
