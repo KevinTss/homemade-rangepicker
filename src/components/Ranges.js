@@ -7,14 +7,15 @@ export default class Ranges {
 
   contains (date) {
     for (let k in this.ranges) {
-      if (
-        date.getTime() >= this.ranges[k].getStart().getTime() &&
-        date.getTime() <= this.ranges[k].getEnd().getTime()
-      ) {
-        return this.range[k]
+      if (this.ranges[k].contains(date)) {
+        return this.ranges[k]
       }
     }
     return null
+  }
+
+  addRange (range) {
+    this.ranges.push(range)
   }
 
   static fromTimestamps (ranges) {

@@ -38,16 +38,32 @@
 }
 
 .rangepicker_day {
-  width: 14%;
+  user-select: none;
+  width: 14.28%;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 35px;
+  margin-bottom: 2px;
 }
 
 .rangepicker_out {
   opacity: 0.35;
 }
 .rangepicker_range {
-  color: peru;
+  background-color: palegreen;
+}
+.rangepicker_newrange {
+  background-color: pink;
+}
+.rangepicker_range-start {
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+.rangepicker_range-end {
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+.rangepicker_newrange {
+
 }
