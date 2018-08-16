@@ -15,6 +15,12 @@ export default class Ranges {
   }
 
   addRange (range) {
+    for (let k in this.ranges) {
+      if (this.ranges[k].intersect(range)) {
+        this.ranges[k].merge(range)
+        return
+      }
+    }
     this.ranges.push(range)
   }
 
