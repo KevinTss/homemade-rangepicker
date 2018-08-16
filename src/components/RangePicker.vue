@@ -1,32 +1,48 @@
 <template>
-  <div class='rangepicker'>
-    <div v-for='(month, i) in months'
-         :key='`month-${i}`'
-         class='rangepicker_month'>
+  <div>
+    <div class='rangepicker'>
 
-      <div class="rangepicker_month_title">
-        {{ month.getName() }}
-      </div>
+      <div v-for='(month, i) in months'
+          :key='`month-${i}`'
+          class='rangepicker_month'>
 
-      <div class="rangepicker_month_days">
-        <div>Lun</div>
-        <div>Mar</div>
-        <div>Mer</div>
-        <div>Jeu</div>
-        <div>Ven</div>
-        <div>Sam</div>
-        <div>Dim</div>
-      </div>
-
-      <div class="rangepicker_month_numbers">
-        <div v-for='(day, i) in month.getDays()'
-             :key='`day-of-month-${month.getName()}-${i}`'
-             class="rangepicker_day"
-             :class="classForDay(day, month, newRange)"
-             @mousedown="startDrag(day)"
-             @mouseover="overDay(day)">
-          {{ day.getDate() }}
+        <div class="rangepicker_month_title">
+          {{ month.getName() }}
         </div>
+
+        <div class="rangepicker_month_days">
+          <div>Lun</div>
+          <div>Mar</div>
+          <div>Mer</div>
+          <div>Jeu</div>
+          <div>Ven</div>
+          <div>Sam</div>
+          <div>Dim</div>
+        </div>
+
+        <div class="rangepicker_month_numbers">
+          <div v-for='(day, i) in month.getDays()'
+              :key='`day-of-month-${month.getName()}-${i}`'
+              class="rangepicker_day"
+              :class="classForDay(day, month, newRange)"
+              @mousedown="startDrag(day)"
+              @mouseover="overDay(day)"
+              @dblclick="removeRange(day)">
+            {{ day.getDate() }}
+          </div>
+        </div>
+
+      </div>
+
+      <div class="rangepicker_actions">
+        <button class="rangepicker_cancel"
+                @click="onCancel">
+          Annuler
+        </button>
+        <button class="rangepicker_cancel"
+                @click="submit">
+          Ok
+        </button>
       </div>
 
     </div>
@@ -83,8 +99,23 @@ export default {
       return classes
     },
     startDrag (day) {
-      this.startDate = day
-      this.newRange = new Range(day, day)
+      let range = this.ranges.contains(day)
+      if (range) {
+        if (range.isStart(day)) {
+          this.newRange = range
+          this.ranges.removeRange(range)
+          this.startDate = range.getEnd()
+          this.cursor = 0
+        } else if (range.isEnd(day)) {
+          this.newRange = range
+          this.ranges.removeRange(range)
+          this.startDate = range.getSart()
+          this.cursor = 1
+        }
+      } else {
+        this.startDate = day
+        this.newRange = new Range(day, day)
+      }
     },
     overDay (day) {
       if (this.newRange !== null) {
@@ -106,6 +137,19 @@ export default {
         this.ranges.addRange(this.newRange)
       }
       this.newRange = null
+    },
+    removeRange (day) {
+      let range = this.ranges.contains(day)
+      if (range) {
+        this.ranges.removeRange(range)
+      }
+    },
+    onCancel () {
+      this.$emit('cancel')
+    },
+    submit () {
+      this.$emit('input', this.ranges.toTimeStamps())
+      this.$emit('submit')
     }
   }
 }

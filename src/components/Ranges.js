@@ -15,13 +15,30 @@ export default class Ranges {
   }
 
   addRange (range) {
-    for (let k in this.ranges) {
-      if (this.ranges[k].intersect(range)) {
-        this.ranges[k].merge(range)
-        return
+    let merged = this.ranges.reduce((m, r) => {
+      if (range.contains(r)) {
+        this.removeRange(r)
+      } else {
+        if (r.intersect(range)) {
+          r.merge(range)
+          return true
+        }
       }
+      return m
+    }, false)
+    if (merged === false) {
+      this.ranges.push(range)
     }
-    this.ranges.push(range)
+  }
+
+  removeRange (range) {
+    this.ranges = this.ranges.filter(r => r !== range)
+  }
+
+  toTimeStamps () {
+    return this.ranges.map(range => {
+      return [range.getStart().getTime(), range.getEnd().getTime()]
+    })
   }
 
   static fromTimestamps (ranges) {
